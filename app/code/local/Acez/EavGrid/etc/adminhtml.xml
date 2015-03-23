@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<menu>
+		<acez_eavgrid translate="title" module="acez_eavgrid">
+			<title>Eav Grid</title>
+			<sort_order>76</sort_order>
+			<depends>
+				<module>Acez_EavGrid</module>
+			</depends>
+
+			<children>
+				<eav translate="title" module="acez_eavgrid">
+					<title>Manage EAV Entities</title>
+					<sort_order>10</sort_order>
+					<action>acez_eavgrid_admin/eav</action>
+				</eav>
+			</children>
+		</acez_eavgrid>
+	</menu>
+
+	<!-- ACL PROTECTION -->
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<acez_eavgrid translate="title" module="acez_eavgrid">
+						<title>Eav Grid</title>
+						<sort_order>76</sort_order>
+
+						<children>
+							<eav translate="title" module="acez_eavgrid">
+								<title>Manage EAV Entities</title>
+							</eav>
+						</children>
+					</acez_eavgrid>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+
+</config>

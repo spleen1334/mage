@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Acez_AdminGrid>
+			<version>0.0.1</version>
+		</Acez_AdminGrid>
+	</modules>
+
+	<global>
+		<!--Admin blocks-->
+		<blocks>
+			<acez_admingrid_adminhtml>
+				<class>Acez_AdminGrid_Block_Adminhtml</class>
+			</acez_admingrid_adminhtml>
+		</blocks>
+
+		
+		<helpers>
+			<acez_admingrid>
+				<class>Acez_AdminGrid_Helper</class>
+			</acez_admingrid>
+		</helpers>
+
+		<models>
+			<acez_admingrid>
+				<class>Acez_AdminGrid_Model</class>
+				<resourceModel>acez_admingrid_resource</resourceModel>
+			</acez_admingrid>
+			<acez_admingrid_resource>
+				<class>Acez_AdminGrid_Model_Resource</class>
+				<entities>
+					<!--Tabele i table alias-->
+					<color>
+						<table>acez_admingrid_color</table>
+					</color>
+				</entities>
+			</acez_admingrid_resource>
+		</models>
+
+		<!--SQL skripte-->
+		<resources>
+			<!--sql/acez_admingrid_setup/install-xxx.php-->
+			<acez_admingrid_setup>
+				<setup>
+					<module>Acez_AdminGrid</module>
+					<class>Mage_Core_Model_Resource_Setup</class>
+				</setup>
+
+				<!--Standardno-->
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</acez_admingrid_setup>
+		</resources>
+
+	</global>
+
+	
+	<!--ADMIN ROUTE-->
+	<!--Ovaj deo je deprecated-->
+	<admin>
+		<routers>
+			<acez_admingrid_admin>
+				<use>admin</use>
+				<args>
+					<module>Acez_AdminGrid_Adminhtml</module>
+					<frontName>color-admin</frontName>
+				</args>
+			</acez_admingrid_admin>
+		</routers>
+	</admin>
+
+	<!--Ovako se sada radi-->
+	<!--site.com/admin/color (naziv ctrlera)-->
+	<!--
+	<admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<acez_admingrid before="Mage_Adminhtml">Acez_AdminGrid_Adminhtml</acez_admingrid>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+	-->
+
+</config>

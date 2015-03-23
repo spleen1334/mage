@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Acez_AjaxCartTwo>
+            <version>0.1.0</version>
+        </Acez_AjaxCartTwo>
+    </modules>
+    <frontend>
+		<!--Route za nas modul-->
+        <routers>
+            <acez_ajaxcarttwo>
+                <use>standard</use>
+                <args>
+                    <module>Acez_AjaxCartTwo</module>
+                    <frontName>ajax</frontName>
+                </args>
+            </acez_ajaxcarttwo>
+        </routers>
+        <layout>
+            <updates>
+                <acez_ajaxcarttwo>
+                    <file>acez_ajaxcarttwo.xml</file>
+                </acez_ajaxcarttwo>
+            </updates>
+        </layout>
+
+	</frontend>
+	<!-- mozda moze i noviji tip rewrite za ovo -->
+	<global>
+        <rewrite>
+            <ajax_cart> <!--This can be any unique id -->
+                <from><![CDATA[#^/checkout/cart/#]]></from>  <!-- the URL which u want to override-->
+                <to>/ajax/index/</to>  <!-- destination url -->
+            </ajax_cart>
+        </rewrite>
+    </global>
+
+</config>

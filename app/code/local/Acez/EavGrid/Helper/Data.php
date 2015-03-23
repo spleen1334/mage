@@ -1,0 +1,7 @@
+<?php
+
+class Acez_EavGrid_Helper_Data extends Mage_Core_Helper_Abstract
+{
+
+}
+

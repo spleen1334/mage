@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Acez_MailConfirm>
+			<version>0.1.0</version>
+		</Acez_MailConfirm>
+	</modules>
+	<global>
+		<models>
+			<acez_mailconfirm>
+				<class>Acez_MailConfirm_Model</class>
+			</acez_mailconfirm>
+		</models>
+		<helpers>
+			<acez_mailconfirm>
+				<class>Acez_MailConfirm_Helper</class>
+			</acez_mailconfirm>
+		</helpers>
+		<blocks>
+			<acez_mailconfirm>
+				<class>Acez_MailConfirm_Block</class>
+			</acez_mailconfirm>
+		</blocks>
+		<template>
+			<email>
+				<sales_acez_mailconfirm_email_template>
+					<label>Acez Mail Confirmation</label>
+					<file>acez_mailconfirm.html</file>
+					<type>html</type>
+				</sales_acez_mailconfirm_email_template>
+			</email>
+		</template>
+		<events>
+			<sales_order_place_after>
+				<observers>
+					<acez_mailconfirm_sendmail>
+						<class>Acez_MailConfirm_Model_Observer</class>
+						<method>sendMailToList</method>
+					</acez_mailconfirm_sendmail>
+				</observers>
+			</sales_order_place_after>
+		</events>
+	</global>
+
+	<!-- Default vrednost za polje u system.xml -->
+	<default>
+		<sales>
+			<acez_mailconfirm>
+				<product_attribute>mail_confirm</product_attribute>
+			</acez_mailconfirm>
+		</sales>
+	</default>
+
+	<!-- Dodaj novi attr za products -->
+	<resources>
+		<acez_mailconfirm_setup>
+			<setup>
+				<module>Acez_MailConfirm</module>
+				<class>Mage_Catalog_Model_Resource_Setup</class>
+				<!--<class>Mage_Eav_Model_Entity_Setup</class>-->
+			</setup>
+			<connection>
+				<use>core_setup</use>
+			</connection>
+		</acez_mailconfirm_setup>
+	</resources>
+
+</config>

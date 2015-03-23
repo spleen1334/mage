@@ -1,0 +1,85 @@
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		// uzima cookie sa imenom popup-shown uz pomoc Mage
+		var check_cookie = "<?php echo Mage::getSingleton('core/cookie')->get('popup-shown'); ?>";
+
+		// test
+//		alert("<?php echo Mage::getSingleton('core/cookie')->get('popup-shown'); ?>");
+//		alert("<?php echo "PORUKA: " . Mage::getSingleton('newsletter/session')->getSuccess(); ?>");
+		
+
+		if (!check_cookie) {
+			var coupon = confirm('Do you want to receive a free coupon?\n(please subscribe to our newsletter)'); 
+			if (coupon) {
+				beginNewsletterForm();
+				// Podesavanje naseg cookie; cookie/mage 10 je trajanje u sekundama, to je radi testiranja
+				<?php Mage::getSingleton('core/cookie')->set('popup-shown', 'true', 360); ?>
+
+			}
+		}
+	});
+
+	function beginNewsletterForm() {
+		jQuery.fancybox({
+			'width': '910px',
+			'height': '450px',
+            'padding': '0px',
+            'autoScale': true,
+            'transitionIn': 'fade',
+            'transitionOut': 'fade',
+            'showCloseButton': true,
+            'type': 'inline',
+            'href': '#newsletter-popup',
+			'onClosed': function() {
+				// KUPON GENERACIJA ZA NASE PREDEFINISANO FREE SHIPPING PRAVILO
+				alert('Here is your free shipping coupon:\n' + '<?php
+					// salesrule tabela odatle izabrati id za pravilo
+					$rule = Mage::getModel('salesrule/rule')->load(44);
+
+					// Magento generator kupona
+					$generator = Mage::getModel('salesrule/coupon_codegenerator');
+
+					// Jos podesavanja za kupon
+					$rule->setCouponCodeGenerator($generator);
+					$rule->setCouponType( Mage_SalesRule_Model_Rule::COUPON_TYPE_AUTO );
+
+					// Uzmi generisan kupon i stampaj
+					$coupon = $rule->acquireCoupon();
+					echo $coupon->getCode();
+				?>');
+			}
+
+		});
+		jQuery('#newsletter-popup').trigger('click');
+	}
+</script>
+
+	
+<div style="display:none;">
+      <div id="newsletter-popup" class="container">
+            <div class="sub-container">
+                  <div class="content">
+                        <div class="register-form">
+								<!-- OVDE SE POST NA URL ZA SUBSCRIBE TO NEWSLETTER -->
+                               <form id="newsletter-registration-form" action="<?php echo $this->getUrl('newsletter/subscriber/new/') ?>" method="post" id="newsletter-validate-detail">
+ 
+                                    <div class="form-fields-middle">
+                                          <div class="input-wrapper">
+                                                <input name="email" id="cm_email" onfocus="if(this.value=='Enter Your Email') this.value=''" onblur="if(this.value=='') this.value='Enter Your Email'" class="validate-email required-entry field-left" type="text" value="Enter Your Email" />
+                                          </div>
+                                    </div>
+                                    <div class="btn-sign-up-now">
+                                          <input type="submit" class="button" value="Sign Up" />
+                                    </div>
+ 
+                              </form>
+                        </div>
+                  </div>
+            </div>
+      </div>
+</div>
+
+<script type="text/javascript">
+	  // Ovde se povezuje nasa fancybox forma sa Mage, to je verovatno da bi mogao da se posalju odgovarjuci podaci na getUrl
+      var newsletterSubscriberFormDetail = new VarienForm('newsletter-registration-form', true);
+</script>

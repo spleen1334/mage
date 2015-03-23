@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<layout>
+  <!-- module/ctrl/action -->
+  <adminhtml_baz_index>
+    <reference name="content">
+      <!-- block: namespace_module/adminhtml_ctrlname -->
+      <block type="acez_admingrid/adminhtml_baz" name="acez_admingrid_baz"/>
+    </reference>
+  </adminhtml_baz_index>
+</layout>

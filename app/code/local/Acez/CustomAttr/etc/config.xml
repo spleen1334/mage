@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Acez_CustomAttr>
+      <version>0.0.1</version>
+    </Acez_CustomAttr>
+  </modules>
+    <global>
+      <resources>
+          <customcatattrb_setup>
+            <setup>
+              <module>Acez_CustomAttr</module>
+              <class>Mage_Eav_Model_Entity_Setup</class>
+            </setup>
+            <connection>
+              <use>default_setup</use>
+            </connection>
+          </customcatattrb_setup>
+      </resources>
+    </global>
+</config>

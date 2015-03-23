@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Acez_Shipment>
+      <version>0.0.1</version>
+    </Acez_Shipment>
+  </modules>
+
+  <global>
+    <models>
+      <acez_shipment>
+        <class>Acez_Shipment_Model</class>
+      </acez_shipment>
+    </models>
+  </global>
+
+  <default>
+    <carriers>
+      <acez_shipment_fixy>
+        <active>1</active>
+        <model>acez_shipment/shipping_carrier_fixy</model>
+        <title>Acez Shipment</title>
+        <name>Fixy</name>
+      </acez_shipment_fixy>
+    </carriers>
+  </default>
+
+</config>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Acez_Popup>
+			<version>0.1.0</version>
+		</Acez_Popup>
+	</modules>
+
+	<frontend>
+		<layout>
+			<updates>
+				<acez_popup>
+					<file>acez_popup.xml</file>
+				</acez_popup>
+			</updates>
+		</layout>
+	</frontend>
+</config>

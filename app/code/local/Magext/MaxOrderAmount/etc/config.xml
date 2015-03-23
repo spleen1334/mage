@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Magext_MaxOrderAmount>
+            <version>1.0.0</version>
+        </Magext_MaxOrderAmount>
+    </modules>
+    <default>
+        <sales>
+            <magext_maxorderamount>
+                <active>0</active>
+                <single_order_top_amount>1500</single_order_top_amount>
+                <single_order_top_amount_msg>
+                    <![CDATA[No single order allowed with the amount over %s.]]>
+                </single_order_top_amount_msg>
+            </magext_maxorderamount>
+        </sales>
+    </default>
+    <global>
+        <models>
+            <magext_maxorderamount>
+                <class>Magext_MaxOrderAmount_Model</class>
+            </magext_maxorderamount>
+        </models>
+        <helpers>
+            <magext_maxorderamount>
+                <class>Magext_MaxOrderAmount_Model</class>
+            </magext_maxorderamount>
+        </helpers>
+    </global>
+    <frontend>
+        <events>
+            <sales_quote_save_before>
+                <observers>
+                    <magext_maxorderamount_enforceSingleOrderLimit>
+                        <class>magext_maxorderamount/observer</class>
+                        <method>enforceSingleOrderLimit</method>
+                    </magext_maxorderamount_enforceSingleOrderLimit>
+                </observers>
+            </sales_quote_save_before>
+        </events>
+    </frontend>
+</config>

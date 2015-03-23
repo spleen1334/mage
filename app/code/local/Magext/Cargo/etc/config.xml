@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Magext_Cargo>
+            <version>1.0.0</version>
+        </Magext_Cargo>
+    </modules>
+    <global>
+        <models>
+            <magext_cargo>
+                <class>Magext_Cargo_Model</class>
+            </magext_cargo>
+        </models>
+    </global>
+    <default>
+        <carriers>
+            <magext_cargo_fixy>
+                <active>1</active>
+                <model>magext_cargo/shipping_carrier_fixy</model>
+                <title>Magext Cargo Fixed</title>
+                <name>Fixy</name>
+            </magext_cargo_fixy>
+        </carriers>
+    </default>
+</config>

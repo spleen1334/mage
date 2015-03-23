@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Acez_ZeroCheckout>
+			<version>0.0.1</version>
+		</Acez_ZeroCheckout>
+	</modules>
+
+    <global>
+	<events>
+		<checkout_cart_product_add_after>
+			<observers>
+				<acez_zerocheckout>
+					<type>singleton</type>
+					<class>acez_zerocheckout/observer</class>
+					<method>modifyPrice</method>
+				</acez_zerocheckout>
+			</observers>
+		</checkout_cart_product_add_after>
+	</events>
+
+        <models>
+            <acez_zerocheckout>
+                <class>Acez_ZeroCheckout_Model</class>
+            </acez_zerocheckout>
+        </models>
+
+	<resources>
+		<acez_zerocheckout_setup>
+			<setup>
+				<module>Acez_ZeroCheckout</module>
+				<class>Mage_Eav_Model_Entity_Setup</class>
+			</setup>
+			<connection>
+				<use>core_setup</use>
+			</connection>
+		</acez_zerocheckout_setup>
+	</resources>
+</global>
+</config>

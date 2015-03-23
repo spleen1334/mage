@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <menu>
+        <system>
+            <children>
+                <tools>
+                    <children>
+                        <magext_logger translate="title" module="magext_logger">
+                            <title>Logger</title>
+                            <action>adminhtml/magext_logger/index</action>
+                            <sort_order>25</sort_order>
+                        </magext_logger>
+                    </children>
+                </tools>
+            </children>
+        </system>
+    </menu>
+</config>

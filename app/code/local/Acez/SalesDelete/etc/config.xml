@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Acez_SalesDelete>
+			<version>0.1.0</version>
+		</Acez_SalesDelete>
+	</modules>
+
+	<!--
+	<global>
+		<blocks>
+			<adminhtml>
+				<rewrite>
+					<sales_order_grid>Acez_SalesDelete_Block_Adminhtml_Sales_Order_Grid</sales_order_grid>
+				</rewrite>
+			</adminhtml>
+		</blocks>
+		<models>
+			<acez_salesdelete>
+				<class>Acez_SalesDelete_Model</class>
+			</acez_salesdelete>
+		</models>
+	</global>
+	-->
+	<!-- event obs nacin
+	<adminhtml>
+		<events>
+			<adminhtml_block_html_before>
+				<observers>
+					<acez_salesdelete_obs>
+						<class>acez_salesdelete/observer</class>
+						<method>addMassAction</method>
+					</acez_salesdelete_obs>
+				</observers>
+			</adminhtml_block_html_before>
+		</events>
+	</adminhtml>
+	-->
+
+	<admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<Acez_SalesDelete before="Mage_Adminhtml">Acez_SalesDelete_Adminhtml</Acez_SalesDelete>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+</config>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Magext_Logger>
+            <version>1.0.0</version>
+        </Magext_Logger>
+    </modules>
+    <global>
+        <models>
+            <magext_logger>
+                <class>Magext_Logger_Model</class>
+                <resourceModel>magext_logger_resource</resourceModel>
+                <magext_logger_resource>
+                    <class>Magext_Logger_Model_Resource</class>
+                    <entities>
+                        <logger>
+                            <table>magext_logger_logger</table>
+                        </logger>
+                    </entities>
+                </magext_logger_resource>
+            </magext_logger>
+        </models>
+        <resources>
+            <magext_logger_setup>
+                <setup>
+                    <module>Magext_Logger</module>
+                </setup>
+            </magext_logger_setup>
+        </resources>
+        <helpers>
+            <magext_logger>
+                <class>Magext_Logger_Helper</class>
+            </magext_logger>
+        </helpers>
+        <blocks>
+            <magext_logger>
+                <class>Magext_Logger_Block</class>
+            </magext_logger>
+        </blocks>
+        <log>
+            <core>
+                <!--  Zend_Log_Writer_Stream -->
+                <writer_model>
+                    Magext_Logger_Model_Log_Writer_Stream
+                </writer_model>
+            </core>
+        </log>
+    </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Magext_Logger before="Mage_Adminhtml">
+                            Magext_Logger_Adminhtml
+                        </Magext_Logger>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+</config>

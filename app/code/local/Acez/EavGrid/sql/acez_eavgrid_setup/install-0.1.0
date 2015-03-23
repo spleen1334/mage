@@ -1,0 +1,24 @@
+<?php
+
+$installer = $this;
+$installer->startSetup();
+
+// Sve entity type tabele (varchar,date, int ...)
+$installer->createEntityTables(
+	$this->getTable('acez_eavgrid/eavgrid_entity')
+);
+
+
+// Entity type definicija
+$installer->addEntityType('eavgrid', Array(
+	'entity_model'  => 'acez_eavgrid/eav',
+	'attribute_model' =>'',
+	'table'  => 'acez_eavgrid/acez_entity',
+	'increment_model' =>'',
+	'increment_per_store' => '0'
+));
+
+// Neophodan korak
+$installer->installEntities();
+
+$installer->endSetup();

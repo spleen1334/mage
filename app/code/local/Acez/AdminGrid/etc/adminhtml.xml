@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<!--Kreiranje menija-->
+	<menu>
+		<!--Ovaj meni ce biti top-level-->
+		<acez_admingrid translate="title" module="acez_admingrid">
+			<title>Color Selector</title>
+			<sort_order>75</sort_order>
+			<depends>
+				<module>Acez_AdminGrid</module>
+			</depends>
+
+			<children>
+				<color translate="title" module="acez_admingrid">
+					<title>Manage Colors</title>
+					<sort_order>10</sort_order>
+					<action>acez_admingrid_admin/color</action>
+				</color>
+			</children>
+		</acez_admingrid>
+	</menu>
+
+	<!--ACL-->
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<acez_admingrid translate="title" module="acez_admingrid">
+						<title>Color Selector</title>
+						<sort_order>75</sort_order>
+
+						<children>
+							<color translate="title" module="acez_admingrid">
+								<title>Manage Colors</title>
+							</color>
+						</children>
+					</acez_admingrid>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

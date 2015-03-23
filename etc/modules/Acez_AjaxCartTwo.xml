@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Acez_AjaxCartTwo>
+			<active>true</active>
+			<codePool>local</codePool>
+		</Acez_AjaxCartTwo>
+	</modules>
+</config>
