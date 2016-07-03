@@ -6,348 +6,548 @@ MAGENTO COURSE (OFFICIAL)
 Section 2
 ---------
 
+
 ---
 
+
 ### Lesson 1. Overview
+
 
 Magento is **OOP** oriented.
 
 **Gang of Four** Design pattern je primenjen u Magentu. > Ukratko, to su neki paterni u programiranju koji se ponavljaju.
 
-**GRASP** design pattern > General Responsibility Assignment Software Patterns (or Principles), > Principi: > 1. Controller > 2. Creator > 3. Indirection > 4. Information Expert > 5. High Cohesion > 6. Low Coupling > 7. Polymorphism
+**GRASP** design pattern > General Responsibility Assignment Software Patterns (or
+Principles)
+
+Principi:
+1. Controller
+2. Creator
+3. Indirection
+4. Information Expert
+5. High Cohesion
+6. Low Coupling
+7. Polymorphism
 
 ---
 
-**MVC** baziran framework. 1. Model 2. View 3. Controller
+**MVC** baziran framework
+ 1. Model
+ 2. View
+ 3. Controller
 
-Pros:* Modular, Flexible, Standard structure, Maintenance, Migration, Reusable model code Cons:* Performance, lot of files, 3 layers not always enough
+**Pros:** Modular, Flexible, Standard structure, Maintenance, Migration, Reusable model code
 
-Magento primanjuje malo drugaciji oblik MVC.* Thin Controllers - To znaci da se logika sistema ne nalazi u ctrl* View - je slozeniji i mnogo bitniji u Magentu, 3 komponente: 1. Layout XML - Konfiguracion fajl + layout  2. Block - Ovde se nalazi sva logika 3. Template (Sam HTML, ono sto se renderuje)* Spominje se termin View Model, mislim da se nesto slicno spominje i u AngularJS
+**Cons:** Performance, lot of files, 3 layers not always enough
 
-Magento FLOW:* Request iz browsera* System(server) odlucuje koji se poziva *modul* i *config** Odatle se startuje odgovarajuci *ctrl* i *action** *ctrl* pokrece odgovarajuci *layout.xml** *layout* odredjuje koji *block* se pokrece* *block* poziva *model** *model* uzima podatke iz DB
+Magento primanjuje malo drugaciji oblik MVC.
+* _Thin Controllers_ - To znaci da se logika sistema ne nalazi u ctrl
+* _View_ - je slozeniji i mnogo bitniji u Magentu, 3 komponente:
+	1. Layout XML - Konfiguracion fajl + layout  
+	2. Block - Ovde se nalazi sva logika
+	3. Template (Sam HTML, ono sto se renderuje)
+* Spominje se termin _View Model_, mislim da se nesto slicno spominje i u AngularJS
+
+Magento FLOW:
+* Request iz browsera
+* System(server) odlucuje koji se poziva **modul** i **config**
+* Odatle se startuje odgovarajuci **ctrl** i **action ctrl** pokrece odgovarajuci *layout.xml** **layout** odredjuje koji **block** se pokrece
+* **block** poziva **model**, **model** uzima podatke iz DB
+
 
 ---
+
 
 ### Lesson 2. Event-driven Architecture
 
-EDA ili Event Driven Architecture je stil razvoja aplikacija koji je fokusiran na *asynchronous* PUSH komunikaciju.
+
+**EDA ili Event Driven Architecture** je stil razvoja aplikacija koji je fokusiran na *asynchronous* PUSH komunikaciju.
 
 > SUSTINA: Omogucava pristup bilo kom procesu iz bilo kog dela aplikacije. Ova razmena se obavlja u real-time. Eventi su glavni mehanizam za prenos info. JS AJAX je jedan od primera ili JQuery events(click, dblclick itd..)
 
 Event-driven programming je paradigma u kojoj je *flow* aplikacije determinisan uz pomoc eventova: npr. user actions, msg from other threads, apps...
 
-Magento specificnosti za EDA: 1. Event-Observer 2. Pipe-and-Filter 3. Intercepting Filters
+Magento specificnosti za EDA:
+1. Event-Observer
+2. Pipe-and-Filter
+3. Intercepting Filters
 
-PUSH pristup:* Sistem u kome se eventovi generisu "This is happening"* Inside > Out
+PUSH pristup:
+* Sistem u kome se eventovi generisu "This is happening" Inside > Out
 
-POOLING pristup: (proveriti tacan naziv, ovo je slicnije JS)* "Hey is this happening?"* Outside > In
+POOLING pristup: (proveriti tacan naziv, ovo je slicnije JS)
+* "Hey is this happening?" Outside > In
 
 > EDA OVERVIEW:
 >
-> Pros:* Laksi razvojni proces* Lakse je poboljsati delove app* Fleksibilnija app
+> Pros:
+> * Laksi razvojni proces
+> * Lakse je poboljsati delove app
+> * Fleksibilnija app
 >
-> Cons:* Manje logican flow app* App interakcije su teze za kontrolisanje
+> Cons:
+> * Manje logican flow app
+> * App interakcije su teze za kontrolisanje
 >
 > Dodatno objasnjenje za system expansibility (lakse je poboljsati delove app)
 >
-> Prime koji je dat je slika sa jednim *event*om na koji se pokrecu nekoliko *observera*(1,2,3..). Sustina je u tome da je moguce dodavati *neogranicen* broj observera i na taj nacin lako prosiriti mogucnosti nekog modula/app.
+> Primer koji je dat je slika sa jednim **event**om na koji se pokrecu nekoliko **observera**(1,2,3..). Sustina je u tome da je moguce dodavati **neogranicen** broj observera i na taj nacin lako prosiriti mogucnosti nekog modula/app.
+
 
 ---
+
 
 ### Lesson 3. Modularity & Module-based Architecture
 
-Modular programming - tehnika koja se zasniva na deljenju neke app u vise odvojenih delova koje zovemo **modules**.
+**Modular programming** - tehnika koja se zasniva na deljenju neke app u vise odvojenih delova koje zovemo **modules**.
 
-Module **guidelines**:* *opaque* znaci da bude nedostupan(ovo nije najbolja rec) za ostatak sistema* not responcible for managing their dependencies* *plug&play* da su pogodni za takvu upotrebu
+Module **guidelines**:
+* _opaque_ znaci da bude nedostupan(ovo nije najbolja rec) za ostatak sistema
+* not _responsible_ for managing their dependencies
+* _plug&play_ da su pogodni za takvu upotrebu
 
-Zanimljiva sekcija: Known issues and limitations.
+#### **Known issues and limitations**.
+* **Mage_Core dependency**
+	* Hard depenency
+* **Modules initialization**
+	* Declaration files are always evaluated
+	* Overhead, you're stuck with the whole system in every request scope
+	* Example: you only need customer obj, but all other active modules have their configuration evaluated
+* **Code intersection**
+	* Two pieces of code do the same thing (ima veze sa rewrites)
+* **Adminhtml Module**
+	* Greska u dizajnu (makar u ranijim verzijama)
+	* Sustinski se tu desava neka vrsta duplikacije, koriste se delovi istih modula
+	* Razlog je zbog admin routes, da bi one bili www.site.com/admin (ranija limitacija magenta)
+	* Ovo je u kasnijim verzijama Magenta popravljeno (proveriti)
+* **Design integration**
+	* Cesto kada treba nesto da se promeni neki funkcionalni proces, taj proces cesto mora da bude vezan za neki template da bi mogao da radi nesto (to je ono premestanje logike iz ctrl >> block,template)
 
 Magento je baziran na **Zend Framework**. On koristi deo Zend frameworka, i odredjene module(klase).
 
-* S obzirom da je baziran na Zend moguce je koristi neke builtin zend classe
-  u magentu.
+* S obzirom da je baziran na Zend moguce je koristi neke builtin zend classe u magentu.
+* Ceo zend se nalazi u magento lib, i moguce je vrlo lako instancirati bilo koju klasu iz Zend-a
+
 
 ---
+
 
 ### Lesson 4. Magento Dir Structure
 
-root app js lib media skin var .htaccess index.php cron.php
 
-app/
+**root app js lib media skin var .htaccess index.php cron.php**
+
+#### app/
 Core of app
-> code/ magento code razdvojen u *code pools*
-> design/ magento design templates
-> locale/ lokalizacija
+* code/ magento code razdvojen u *code pools*
+* design/ magento design templates
+* locale/ lokalizacija
 
-js/
+#### js/
 Sve js lib koje se koriste u Magentu. Sam magento koristi *prototype.js* i *script.aculo.us*. Od verzije 2 default lib ce biti *jquery*.
 
-lib/
-Varien i *Mage lib razvijene od strane Magento tima, kao i sve 3rd party PHP lib koje se koriste u magentu kao npr PEAR i Zend
+#### lib/
+Varien i Mage lib razvijene od strane Magento tima, kao i sve 3rd party PHP lib koje se koriste u magentu kao npr PEAR i Zend
 
-media/
+#### media/
 Sve slike, media fajlovi, ili skoro bilo sta sto je uploadovano preko admin.
-> catalog/ Mage_Catalogue fajlovi
-> customer/ Mage_Customer
-> downloadable Mage_Downloadable
-> import/
+* catalog/ Mage_Catalogue fajlovi
+* customer/ Mage_Customer
+* downloadable Mage_Downloadable
+* import/
 
-skin/
+#### skin/
 Svi skinovi za Magento, to je uglavnom front end img i css koji se koriste u themes.
-> adminhtml/ admin area
-> frontend/ frontend
-> install/ install wizard
+* adminhtml/ admin area
+* frontend/ frontend
+* install/ install wizard
 
-var/ Temp fajlovi, cache, locks, session storage ...
-> cache/ system & user cache
-> session/ php session
-> tmp
+#### var/ Temp fajlovi, cache, locks, session storage ...
+* cache/ system & user cache
+* session/ php session
+* tmp
+
 
 ---
 
-*Module Directory Structure*
 
-[Naziv_Modula] > Block > controllers > etc > Helper > Model > sql
+### **Module Directory Structure**
 
-- Nije obavezno da svaki modul ima sve ove komponente.
+[Naziv_Modula]
+* Block
+* controllers
+* etc
+* Helper
+* Model
+* sql
 
-*Block* Dodatni layer izmedju ctrl i view, u Magentu ovde se smesta logika.
+	**Nije** obavezno da svaki modul ima sve ove komponente.
 
-> INICIJALIZACIJA Inicijalizacija se vrsi kroz *factory methode*. (za block, helpers, models) Tu su bitni configuracioni fajlovi jer se tu definisu prefix za klase. Class name postaje file path.
+**Block**
+
+Dodatni layer izmedju ctrl i view, u Magentu ovde se smesta logika.
+
+> INICIJALIZACIJA
+Inicijalizacija se vrsi kroz **factory methode**. (za block, helpers, models) Tu su bitni configuracioni fajlovi jer se tu definisu prefix za klase. Class name postaje file path.
 >
 > createBlock('catalog/product_view')
 >
 > Mage_Catalogue_Block_Product_View # ovo se moze pratiti kao file path |- class prefix -|- obj -|
 
-*controller* Mesto za ctrl od nekog modula. Nisu includovani od strane *autoloadera*.
+**controller**
+
+Mesto za ctrl od nekog modula. Nisu includovani od strane *autoloadera*.
 
 NazivController.php -> primer naziva ctrl
 
-*etc* Configuracioni fajlovi XML. > config.xml - bitan fajl za konfiguraciju modula
+**etc**
 
-*Helper/Model* Veoma slicna konfiguracija i dir struktura.
+Configuracioni fajlovi XML. > config.xml - bitan fajl za konfiguraciju modula
+
+**Helper/Model**
+
+Veoma slicna konfiguracija i dir struktura.
 
 Helper - pomocna klasa koja se koristi da bi neku funkcionalnost ucinio dostupnim u drugim(vise) modula
 
 Model - Business logic of certain Magento entity.
 
-*sql* DB setup, install/upgrade scripte (EAV, attributes itd..)
+**sql**
+
+DB setup, install/upgrade scripte (EAV, attributes itd..)
+
 
 ---
 
-*CODE POOLS*
 
-Organizacija koda. Nalaze se u app/code/
+### **CODE POOLS**
 
-1 local 2 community 3 core
 
-> INICIJALIZACIJA
->
-> 1. request dolazi na index.php
-> 2. index.php includuje app/Mage.php
-> 3. On sadrzi Mage class (applikacija) i Varien/Autoload.php
-> 4. U Mage.php se konfiguruse $path gde se traze sve klase, oni su sortirani po prioritetu 1. local 2. community 3. core 4. lib (ovo omogucava *overwriting*)
-> 5. Varian/Autoload.php sadrzi autuload($class) method. On efektivno vrsi autoloading tako sto zamenjuje stringove neke klase u odgovarajuci path To je prica o tome da je class name ujedno i file path: Mage_Catalog_Product_View > ujedno je i path za trazeni obj
+#### Organizacija koda.
+Nalaze se u **app/code/**
+1. local
+2. community
+3. core
+
+#### INICIJALIZACIJA
+
+1. request dolazi na index.php
+2. index.php includuje app/Mage.php
+3. On sadrzi Mage class (applikacija) i Varien/Autoload.php
+4. U Mage.php se konfiguruse $path gde se traze sve klase, oni su sortirani po prioritetu 1. local 2. community 3. core 4. lib (ovo omogucava *overwriting*)
+5. Varian/Autoload.php sadrzi autuload($class) method. On efektivno vrsi autoloading tako sto zamenjuje stringove neke klase u odgovarajuci path To je prica o tome da je class name ujedno i file path: Mage_Catalog_Product_View > ujedno je i path za trazeni obj
 
 ---
-**app/code/Mage.php** Ovaj fajl sadrzi autoloader.
-**lib/Varien/Autoload.php::autoload()** Ovaj fajl vrsi samu konverziju za autoload (Class
-names >> se konvertuje u file path)
+**app/code/Mage.php**
+
+Ovaj fajl sadrzi autoloader.
+* **lib/Varien/Autoload.php::autoload()**
+
+Ovaj fajl vrsi samu konverziju za autoload (Class names >> se konvertuje u file path)
+
+
 ---
 
-CODE POOLS KORISNICI:
-* app/code/core >> Magento team, ovo se skoro nikada modifikuje
-* app/code/community >> extensions, 3rd party
-* app/code/local >> ovo je nasa app, tu se cuvaju i Mage overrides
+
+#### CODE POOLS KORISNICI:
+1. app/code/core
+	* Magento team, ovo se skoro nikada modifikuje
+2. app/code/community
+	* extensions, 3rd party
+3. app/code/local
+	* ovo je nasa app, tu se cuvaju i Mage overrides
 
 
-PHP INCLUDE PATH ORDER: Local > Community > Core Ovo omogucava overwriting Mage klasa.
+**PHP INCLUDE PATH ORDER:**
 
-NAMESPACE Abstract container or enviroment for holding logical grouping. Ukratko to je prvi folder ispod code pool-a.
+Local > Community > Core Ovo omogucava overwriting Mage klasa.
 
-Npr: app/code/local/Training/Foo *Training = Namespace Foo = Module*
+**NAMESPACE**
+
+Abstract container or enviroment for holding logical grouping. Ukratko to je prvi folder ispod code pool-a.
+
+* Npr: app/code/local/Training/Foo *Training = Namespace Foo = Module*
 
 * Konvencija je da svaka kompanija koristi svoje ime za Namespace, kako bi se izbegli konflikti sa kodom drugih korisnika.
 
----
-
-LOCATING TEMPLATES
-
-app + design + [AREA_NAME] + [PACKAGE_NAME] + [THEME_NAME] + template + [MODULE_NAME]
-
-# File path je relativan samo u odnosu na template folder (znaci nemora ceo path)
-
-Default templates: app/design/[frontend/adminthml/...]/base/default/template
-
-# Layout XML - Konfiguracija od strane modula.
-
-skin/ - u sustini izgled strane, theme, js, img...
-
-js/ - System wide js files location. u root dir
 
 ---
 
-PRIMERI:
 
-page.xml > LAYOUT /app/design/frontend/base/default/page.xml
+### LOCATING TEMPLATES
 
-Product.php > MODEL app/code/core/Mage/Catalog/Model/Product.php
+##### app + design + [AREA_NAME] + [PACKAGE_NAME] + [THEME_NAME] + template + [MODULE_NAME]
 
-Order collection > app/code/core/Mage/Sales/Model/Mysql4/Order/Collection.php
+* **File path** je relativan samo u odnosu na template folder (znaci nemora ceo path)
 
-opcheckout.js > THEME JS skin/frontend/base/default/js/opcheckout.js
+* **Default templates:** app/design/[frontend/adminthml/...]/base/default/template
 
-Varien data collection db > /lib/Varien/Data/Collection/Db.php
+* **Layout XML** - Konfiguracija od strane modula.
+
+* **skin/** - u sustini izgled strane, theme, js, img...
+
+* **js/** - System wide js files location. u root dir
 
 ---
+
+### PRIMERI:
+
+page.xml
+> LAYOUT /app/design/frontend/base/default/page.xml
+
+Product.php
+> MODEL app/code/core/Mage/Catalog/Model/Product.php
+
+Order collection
+> app/code/core/Mage/Sales/Model/Mysql4/Order/Collection.php
+
+opcheckout.js
+> THEME JS skin/frontend/base/default/js/opcheckout.js
+
+Varien data collection db
+> /lib/Varien/Data/Collection/Db.php
+
+
+---
+
 
 ### Lesson 5. Configuration XML
 
-Magento configuration is a bunch of XML files that are merged together during app initializzation in one tree. Ucitavaju se po alfabetu (files)
+
+Magento configuration is a bunch of XML files that are merged together during app initializzation in one tree. Ucitavaju se po alfabetu (files).
 
 * app/etc - Glavna lokacija za config fajlove
->- config.xml enterprise.xml local.xml (ovo su neki root xml fajlovi)
+	* config.xml enterprise.xml local.xml (ovo su neki root xml fajlovi)
 
-app/etc/modules/ - lokacija cfg za sve module
+* app/etc/modules/ - lokacija deklarativnih cfg za sve module
 
-Izgled XML:<config> - root node <modules> <Namespace_ModuleName> <active>true</active> - da li je ovaj modul aktiva (u upotrebi) <codePool>core</codePool> - kom codePool pripada <depends> - dependencies <Mage_Adminhtml/> - klasa
+#### Izgled XML:
+```xml
+<config> - root node
+	<modules>
+		<Namespace_ModuleName>
+			<active>true</active> - da li je ovaj modul aktiva (u upotrebi)
+			<codePool>core</codePool> - kom codePool pripada
+			<depends> - dependencies <Mage_Adminhtml/> - klasa
+```
 
 ---
-PRIMER<config> <modules> <Enterprise_Banner> <active>true</active> <codePool>core</codePool> <depends> <Mage_Adminhtml/> <Mage_CatalogRule/> <Mage_SalesRule/> <Enterprise_Cms/> <Enterprise_CustomerSegment/> </depends> </Enterprise_Banner> </modules></config>
 
+#### PRIMER
+```xml
+<config>
+	<modules>
+		<Enterprise_Banner>
+			<active>true</active>
+			<codePool>core</codePool>
+			<depends>
+				<Mage_Adminhtml/>
+				<Mage_CatalogRule/>
+				<Mage_SalesRule/>
+				<Enterprise_Cms/>
+				<Enterprise_CustomerSegment/>
+			</depends>
+```
 = app/code/core/Enterprise/Banner/etc/config.xml (za Banner)
 
 ---
 
-*XML*
+#### **XML**
 
-CONFIGURATION AREAS: global, default, frontend(ili admin), catalog
+**CONFIGURATION AREAS:** global, default, frontend(ili admin), catalog
 
-<config> <modules> Module declarations (names, status, dependencies) </modules>
+* `<config><modules> Module declarations (names, status, dependencies) </modules>`
 
-<global> Definitions that should be shared between all scopes * db settings (host, db name, username password) * connection types (read/write) * db adapter * core module class names </global>
+* `<global>` Definitions that should be shared between all scopes
+	- db settings (host, db name, username password)
+	- connection types (read/write)
+	- db adapter
+	- core module class names
 
-<default> Definitions shared between all store configurations * dir structure * system locale * design and theme configs * system options </default>
+* `<default>` Definitions shared between all store configurations
+	- dir structure
+	- system locale
+	- design and theme configs
+	- system options
 
-<frontend> Definitions only for frontend * routers * translation files * layout XML files * Observers declaration </frontend>
+* `<frontend>` Definitions only for frontend
+	- routers
+	- translation files
+	- layout XML files
+	- Observers declaration
 
-<catalog> Only for Mage_Catalog module * Ovaj deo se odnosi na specifican modul </catalog></config>
+* `<catalog>` Only for Mage_Catalog module
+	- Ovaj deo se odnosi na specifican modul </catalog></config>
 
----
-
-PRISTUP CONFIGURATION VALUE
-
-STORE - Ovo je prodavnica, jer svaki magento app moze da ih ima vise (npr English,France itd..) Obicno se store odnosi na STORE VIEW. STORE = STORE VIEW
-
-
-	- $store->getConfig($path);
-- Get part of config
-
-	- Mage::getStoreConfig($path [,$store]);
-- Part of config(opste)
-
-	- Mage::getStoreConfigFlag($path [,$store]);
-- Check store flag
-
-	- Mage::getConfig()->getNode($path [,$scope]):
-- Access by absolute path
 
 ---
 
-VEZBA - KREIRANJE MODULA
+
+#### PRISTUP CONFIGURATION VALUE
+
+
+**STORE** - Ovo je prodavnica, jer svaki magento app moze da ih ima vise (npr English,France itd..) Obicno se store odnosi na STORE VIEW. STORE = STORE VIEW
+
+* $store->getConfig($path);
+	* Get part of config
+
+* Mage::getStoreConfig($path [,$store]);
+	* Part of config(opste)
+
+* Mage::getStoreConfigFlag($path [,$store]);
+	* Check store flag
+
+* Mage::getConfig()->getNode($path [,$scope]):
+	* Access by absolute path
+
+
+---
+
+
+#### VEZBA - KREIRANJE MODULA
 
 1. app/etc/modules > File name konvencija - Namespace_ModuleName.xml >> First_Module.xml
   * Module declaration file
   * XML uvek sadrzi config kao root node
 
+```xml
 <?xml version="1.0" encoding="UTF-8"?> <config> <modules> <First_Module> <!-- app/code/<codePool>/First/Module --> <active>true</active> <codePool>local</codePool> </First_Module> </modules> </config>
+```
 
-2. Kreirati Modul dir/file u: app/code/local/First/Module
-3. Kreirati config file za modul: .../First/Module/etc/config.xml
-<config><default> - store <some> <random> <xpath>Test value.</xpath> </random> </some></default><stores> <french> <some> <random> <xpath>French value.</xpath> </random> </some> </french></stores></config>
+2. Kreirati Modul dir/file u: _app/code/local/First/Module_
+3. Kreirati config file za modul: _.../First/Module/etc/config.xml_
+```xml
+<config>
+	<default> - store
+		<some> <random> <xpath>Test value.</xpath> </random> </some>
+	</default>
+	<stores>
+		<french>
+			<some> <random> <xpath>French value.</xpath> </random> </some> </french>
+	</stores>
+</config>
+```
 
-DEFAULT FALLBACK ZA NEKU ROUTE: Mage/Cms/controllers/IndexController.php > indexAction() - ROOT PATH
+* **DEFAULT FALLBACK ZA NEKU ROUTE:** Mage/Cms/controllers/IndexController.php > indexAction() - ROOT PATH
 
-PRISTUP INFORMACIJI IZ XML: echo Mage::getStoreConfig('some/random/xpath') = Test value ili French value - u zavisnosti od toga koji je STORE VIEW aktivan
+* **PRISTUP INFORMACIJI IZ XML:** echo Mage::getStoreConfig('some/random/xpath') = Test value ili French value - u zavisnosti od toga koji je STORE VIEW aktivan
 
-RETURN VALUE OF getCONFIG is OBJ: var_dump( Mage::getConfig()->getNode('default/some/random/xpath') );
+* **RETURN VALUE OF getConfig is OBJ:** var_dump( Mage::getConfig()->getNode('default/some/random/xpath') );
+
 
 ---
+
 
 ### Lesson 6. Functional and Factory Class Groups
 
-Class instantiating other classes = *Factory*
+Class instantiating other classes = **FACTORY** Class
 
-REALIZATION IN MAGENTO > Ovo predstavlja tok za instanciranje raznih objekata (model, helper, block)
-* Class MAGE - Mage.php 1. Mage::getModel($modelClass = '', $argument = array());
-  1 Class Mage_Core_Model_Config
-  2 getModelInstance($modelClass='', $constructArguments=array())
-  3 getModelClassName($modelClass) // poziva se unutar getModelInstance
-  4 getGroupedClassName($groupType, $classId, $groupRootNode=null) Glavni method, svi vode ka njemu ($groupTYpe se podesava da li je model, helper, block). On uzima podatke iz XML config fajlova.
+#### REALIZATION IN MAGENTO
+Ovo predstavlja tok za instanciranje raznih objekata (model, helper, block)
+* Class MAGE - Mage.php
+	* Mage::getModel($modelClass = '', $argument = array());
+	1. Class Mage_Core_Model_Config
+	2. getModelInstance($modelClass='', $constructArguments=array())
+	3. getModelClassName($modelClass) // poziva se unutar getModelInstance
+	4. getGroupedClassName($groupType, $classId, $groupRootNode=null)
+	Glavni method, svi vode ka njemu 		($groupTYpe se podesava da li je model, helper, block). On uzima podatke iz XML config fajlova.
 
-* Class Mage_Core_Model_Config - Ovde se nalaze bitne info za konfigurisanje
+Class **Mage_Core_Model_Config** - Ovde se nalaze bitne info za konfigurisanje
 
 Ovo je neka osnovna kofiguracija za xml: config>global>models/helpers/blocks
 
-METHODS INSTANTIATE Mage::getModel('classgroup/...') getResourceModel(...) helper(...)
+METHODS FOR INSTANTIATE (Factory)
+Mage::getModel('classgroup/...') getResourceModel(...) helper(...)
 
 
 ---
 
-EXAMPLE: Instantiate
+#### EXAMPLE: Instantiate
 
-- Lokacija: Mage_Cms_Controller_Index > indexAction
-- Instantiate product model and resource model Mage::getModel('catalog/product'); Mage::getResourceModel('catalog/product');
-- Create sales helper and tempalte block instance Mage::helper('sales') >> 'sales/data' Helperi imaju mogucnost za malo drugacije pozivanje factory metoda. Ukoliko helperi nemaju / deo, on se po defaultu odnosi na *Data*.
+* Lokacija: Mage_Cms_Controller_Index > indexAction
+* Instantiate product model and resource model:
+	* Mage::getModel('catalog/product');
+	* Mage::getResourceModel('catalog/product');
+* Create sales helper and template block instance:
+	* Mage::helper('sales') >> 'sales/data'
+	* Helperi imaju mogucnost za malo drugacije pozivanje factory metoda.
+		Ukoliko helperi nemaju / deo, on se po defaultu odnosi na **Data**.
+	* Mage::app()->getLayout()->createBlock('core/template') (ovo je objasnjeno u render delu)
 
-- Mage::app()->getLayout()->createBlock('core/template') (ovo je objasnjeno
-  u render delu)
 
-
-PRIMER F() FLOW ZA MAGE::GETMODEL()
+###### PRIMER F() FLOW ZA MAGE::GETMODEL()
 1. Mage.php::getModel() >> getModelInstance()
 2. getModelInstance() > Mage_Core_Model_Config >> getModelClassName()
 3. getModelClassName() >> getGroupedClassName('model/helper/block', $modelClass)
 4. getGroupedClassName() je *glavna* methoda
-  * Ona filtrira passovan string i vraca $className
-  * tu se vrsi i provera za *REWRITE*
+	* Ona filtrira passovan string i vraca $className
+	* tu se vrsi i provera za *REWRITE*
+
 
 ---
+
 
 ### Lesson 7. Class Overrides in Magento
 
-OVERRIDEABLE: Model, Resource Model, Block, Helper
 
-MAGE-CORE-MODEL-CONFIG >> Glavna klasa uz pomoc koje Mage vrsi inspekciju
+#### OVERRIDEABLE:
+* Model, Resource Model, Block, Helper
+
+**MAGE_CORE_MODEL_CONFIG**
+Glavna klasa uz pomoc koje Mage vrsi inspekciju
 config-a objekta.
-
-PRIMER ZA MODEL:
-
-XML File:<global> ... <models> <sales> // Naziv modula <rewrite> <quote_address>Training_Sales_Model_Quote_Address</quote_address> // Klasa Quote_Address </rewrite> </sales> </models> ...</global>
-
-Poziv kroz factory method: Mage::getModel('sales/quote_address'); // skace na <rewrite>
-
-> Mage_Sales_Model_Quote_Address - ovo je ponasanje bez override * Mage_Sales_Model = class prefix * Quote_Address = odnosi se na model QuoteAddress.php
->
-> Training_Sales_Model_Quote_Address - ovo je SA override
-
-XML tok: > global/models/sales/class ili rewrite (sibilings)/quote_address
-
-Zakljucak: U XML <rewrite> smo overridovali default Mage_Sales_Model_Quote_Address, sa nasim kodom. Training/Sales/Model/QuoteAddress.php
 
 ---
 
-PRIMER RESOURCE MODEL:
+#### PRIMER ZA MODEL:
 
-XML File:<global> // ... <models> // tip <cms_mysql4> // Naziv modula <rewrite> <page>Training_Cms_Model_Mysql4_Cms_Page</page> // Klasa Page </rewrite> </cms_mysql4> </models> ...</global>
+XML File:
+```xml
+<global> ...
+	<models>
+		<sales> // Naziv modula
+			<rewrite>
+			<quote_address>Training_Sales_Model_Quote_Address</quote_address> // Klasa Quote_Address
+```
 
-Poziv: Mage::getResourceModel('cms/page'); // cms a ne cms_mysql4
+* Poziv kroz factory method: Mage::getModel('sales/quote_address'); // skace na `<rewrite>`
 
-XML tok: > global/models/cms/resourceModel = 'cms_mysql4' > to znaci da se resourceModel nalazi nize pod nazivom <cms_mysql4> > > global/models/cms_mysql4/class ili rewrite/page medjutim on se poziva factory method sa originalnim nodom cms/page, a ne cms_mysql4/page
+* Mage_Sales_Model_Quote_Address - ovo je ponasanje bez override
+	* Mage_Sales_Model = class prefix
+	* Quote_Address = odnosi se na model QuoteAddress.php
 
-cms_mysql4 BITNO Ovo se drugacije ponasa i valjda je sustina da se kod resourceModela XML poziva 2 puta.
+* Training_Sales_Model_Quote_Address - ovo je _SA_ override
 
-Zakljucak: resourceModel ima dodatni xml <node> koji mora da se pronadje. Na nasem primeru postoji samo: Model: models/cms/resourceModel 'cms_mysql4' Resource model: models/cms_mysql4 - za ovo se pise rewrite
+* XML tok: > global/models/sales/class ili rewrite (sibilings)/quote_address
+
+**Zakljucak:** U XML `<rewrite>` smo _overridovali_ default Mage_Sales_Model_Quote_Address, sa nasim kodom. Training/Sales/Model/QuoteAddress.php
+
+---
+
+#### PRIMER RESOURCE MODEL:
+
+XML File:
+```xml
+<global> // ...
+	<models> // tip
+		<cms_mysql4> // Naziv modula
+			<rewrite>
+				<page>Training_Cms_Model_Mysql4_Cms_Page</page> // Klasa Page
+```
+
+* Poziv: Mage::getResourceModel('cms/page'); // cms a ne cms_mysql4
+
+XML tok:
+* global/models/cms/resourceModel = 'cms_mysql4'
+	* to znaci da se resourceModel nalazi nize pod nazivom <cms_mysql4>
+
+* global/models/cms_mysql4/class ili rewrite/page medjutim on se poziva factory method sa originalnim nodom cms/page, a ne cms_mysql4/page
+
+* cms_mysql4 **BITNO** Ovo se drugacije ponasa i valjda je sustina da se kod resourceModela XML poziva 2 puta.
+
+**Zakljucak:** resourceModel ima dodatni xml `<node>` koji mora da se pronadje. Na nasem primeru postoji samo:
+1. Model: models/cms/resourceModel 'cms_mysql4'
+2. Resource model: models/cms_mysql4 - za ovo se pise rewrite
 
 Rewrite se pise za models/cms_mysql4/page iako se kod poziva sa cms/page
 
@@ -355,25 +555,30 @@ UKRATKO NEMOZE DA SE <REWRITE> NODE KOJI PISE U FACTORY, JER TO NIJE PUN NAZIV Z
 
 ---
 
-BLOCK PRIMER Je isti kao i za model
-
-HELPER PRIMER isto kao i za model/block. Jedina specificnost je da kad ne postoji dodatni / pretpostavlja se da je class name = DATA. Pa se uglavnom <rewrite><data> Mage::helper('checkout') == Mage::helper('checkout/data')
+#### BLOCK PRIMER Je isti kao i za model
 
 ---
 
-EXERCIZE
+#### HELPER PRIMER
+isto kao i za model/block.
+
+Jedina specificnost je da kad ne postoji dodatni / pretpostavlja se da je class name = DATA. Pa se uglavnom <rewrite><data> Mage::helper('checkout') == Mage::helper('checkout/data')
+
+---
+
+#### EXERCISE
 
 > TEST SCRIPT
 >
 > Moze da se stavi u root dir:
 >
-> <?php include 'app/Mage.php'; Mage::app();
+> `<?php include 'app/Mage.php'; Mage::app();`
 
 TARGET: Rewrite Mage_Catalog_Model_Product->getName()
 
-CONFIG: 1. app/etc/modules/First_Module.xml - ovo glavni cfg
-
-1. app/code/local/First/Module/etc/config.xml - ovo editujemo
+CONFIG:
+1. app/etc/modules/First_Module.xml - ovo glavni cfg
+2. app/code/local/First/Module/etc/config.xml - ovo editujemo
 ```
 <global>
 	<models> - tip
@@ -382,16 +587,17 @@ CONFIG: 1. app/etc/modules/First_Module.xml - ovo glavni cfg
 				<product> - klasa First_Module_Model_Product
 ```
 
-PRODUCT.PHP Ovde se upisuje nova rewritovan method:
+PRODUCT.PHP Ovde se upisuje novi rewritovan method:
 
 First/Module/Model/Product.php
 
-```
+```php
 class First_Module_Model_Product extends Mage_Catalog_Model_Product {
-	public function getName(){
+	public function getName() {
 		$name = parent::getName();
 		return strtoupper($name); // vraca sve u UPPERCASE
-} }
+	}
+}
 ```
 
 
@@ -400,57 +606,64 @@ class First_Module_Model_Product extends Mage_Catalog_Model_Product {
 ### Lesson 8. Event Observer
 
 
-Samo jedan method za pozivanje eventova: Mage::dispatchEvent('catalog_product_collection_load_after', array('collection'=>$this))
-(Nalazi se u Mage.php)
+Samo jedan method za pozivanje eventova:
+* Mage::dispatchEvent('catalog_product_collection_load_after', array('collection'=>$this))
+* (Nalazi se u app/Mage.php)
 
 
-OBSERVER INVOCATION:
+#### OBSERVER INVOCATION:
 
-> dispatchEvent()
+###### dispatchEvent()
 * Create events and observer obj
+```php
   $event = new Varien_Event($args);
   $event->setName($eventName);
   $observer = new Varien_Event_Observer();
+```
 
 * Assign event to observers
+```php
   $observer->setData(array('event'=>$event));
+```
 
 * Call observers method
+```php
   $method = $obs['method'];
   $observer->addData($args);
   $object = Mage::getModel($obs['model']);
   $object->$method($observer);
+```
 
+#### NEKI EVENTOVI SE AUTO DISPATCH-UJU
+Lista:
+* \_load_before
+* \_load_after
+* \_save_before
+* \_save_after
+* \_save_commit_after
+* \_delete_before
+* \_delete_after
+* \_delete_commit_after
 
-NEKI EVENTOVI SE AUTO DISPATCHUJU. Lista:
-* _load_before
-* _load_after
-* _save_before
-* _save_after
-* _save_commit_after
-* _delete_before
-* _delete_after
-* _delete_commit_after
+#### KONVENCIJE:
+1. **Jedna** Observer.php klasa po modulu
+2. Oni su kolekcija observer **methoda**
+3. Te metode moraju da budu **public**
+4. Uvek imaju (**Varien_Event_Observer $observer**) kao parametar
+5. Observers are **allways** Models
 
-KONVENCIJE:
-1. Jedna Observer.php klasa po modulu
-2. Oni su kolekcija observer methoda
-3. Te metode moraju da budu public
-4. Uvek imaju (*Varien_Event_Observer $observer*) kao parametar
-5. Observers are *allways* Models??
-
-PRIMER.
+#### PRIMER.
 Modifikacija parametara:
 Mage::dispatchEvent('catalog_product_collection_load_after', array('collection'=>$this))
 
-```
+```php
 .. public function productCollectionLoadBefore(Varien_Event_Observer $observer) { ... $collection = $observer->getData('collection'); // odnosi se na array iz dispatch $collection->addFieldToFilter('entity_id', array('nin'=>$productId)); }
 
 ```
 
 
-CONFIGURATION
-```
+#### CONFIGURATION
+```xml
 <frontend>
  ..
 	<events>
@@ -463,9 +676,9 @@ CONFIGURATION
 ```
 
 
-CRON JOB
-Neka vrsta automatizacije.
-```
+#### CRON JOB
+Linux cron job integracija (cron.sh/cron.php iz root)
+```xml
 <crontab>
 	<jobs>
 		<catalog_product_index_price_reindex_all>
@@ -475,7 +688,7 @@ Neka vrsta automatizacije.
 
 ---
 
-EXERCISE - OBSERVER
+#### EXERCISE - OBSERVER
 
 1. app/etc/modules/Foo_Bar.xml
 
@@ -487,7 +700,7 @@ etc/config.xml config>frontend>events>catalog_product_load_afte2. app/code/local
 
 etc/config.xml
 
-```
+```xml
 <config>
 
   <global>
@@ -509,7 +722,7 @@ etc/config.xml
 
 1. Foo/Bar/Model/Observer.php
 
-```
+```php
 class Foo_Bar_Model_Observer
 {
   public function catalogProductLoadAfter(Varien_Event_Observer $observer)
@@ -523,7 +736,6 @@ class Foo_Bar_Model_Observer
 ```
 
 ---
-
 ---
 
 Section 3. Lesson 1. Request Flow
@@ -710,7 +922,7 @@ $controllerInstance->dispatch($action)
 
 
 APP/ETC/CONFIG ZA ROUTER
-``
+```
 <config>
 ...
   <stores>
@@ -728,6 +940,7 @@ APP/ETC/CONFIG ZA ROUTER
 ```
 
 ---
+
 ##URL COMPOSITION
 
 $baseUrl/$frontName/$controllerName/$actionName/$otherParams
@@ -746,14 +959,14 @@ Ovde mislimo na homepage.
 
 URL TOOLS
 1. Redirect in actions
-   $this->_redirect('checkout/cart')
+   $this->\_redirect('checkout/cart')
 
 2. Redirect in other places
    Mage::getUrl($path, $arguments)
 
 3. Internals
    Mage_Core_Model_Url
-   ``
+   ```php
    $route = Mage::getModel('core/url')
       ->setRouteName('checkout')
       ->setControllerName('cart')
@@ -762,7 +975,7 @@ URL TOOLS
     ```
 
 4. Direktno ka linku
-   $this->_redirectUrl('http://www.google.com')
+   $this->\_redirectUrl('http://www.google.com')
 
 ---
 
@@ -775,12 +988,12 @@ ACTION IN CTRL
 6. Renderuje layout ako je neophodno
 
 > U Magentu ctrl NE SME da sadrzi logiku.
-> Sva logika se mora nalaziti u models/helpers
+> Sva logika se mora nalaziti u Blocks /models/helpers
 
 ---
 
 XML Config za kreiranje URL za kontroler:
-``
+```xml
 <config>
   <frontend>
     <routers>
@@ -794,7 +1007,7 @@ XML Config za kreiranje URL za kontroler:
 
 
 XML Config URL kontroler REWRITE:
-``
+```xml
 <frontend>
   <routers>
     <catalog>
@@ -811,7 +1024,7 @@ EXERCISE - ROUTING
 Module with Ctrl, echo 'Hello World', override.
 
 1. app/code/local/Foo/Bar/etc/config.xml
-``
+```xml
 <config>
   <frontend> - ili admin
     <routers>
@@ -831,7 +1044,7 @@ controller = index (IndexController.php, Klasa: Foo_Bar_IndexController)
 action     = index (indexAction())
 
 3. Foo/Bar/controllers/PastaController.php
-``
+```
 class Foo_Bar_PastaController extends Mage_Core_Controller_Front_Action {
   public function sleepAction(){
     echo '<h1>Im so tired after eating pasta</h1>'; // Hello world
@@ -846,7 +1059,7 @@ class Foo_Bar_PastaController extends Mage_Core_Controller_Front_Action {
 * action    = view
 
 app/code/local/Foo/Bar/etc/config.xml
-``
+```
 <config>
   <frontend>
     <routers>
@@ -860,7 +1073,7 @@ app/code/local/Foo/Bar/etc/config.xml
 5. Foo/Bar/controllers/Catalog/CategoryController.php
 * require_once se koristi da bi se extendovao/rewriteovao ORIGINALNI ctrl
   (proveriti da li postoji neki kraci/lepsi nacin)
-``
+```
 require_once 'app' . DS . 'code' . DS . 'core' . DS . 'Mage' . DS . 'Catalog'
 . DS . 'controllers' . DS . 'CategoryController.php';
 
@@ -872,7 +1085,7 @@ public function viewAction() {
   }
 }
 
-``
+```
 > site.com/catalog/category/view/
 >> ovo radi!
 
@@ -3847,7 +4060,7 @@ Training/Animal/etc/adminhtml.xml
 SYSTEM CONFIGURATION
 
 SYSTEM.XML
-To je fajl slican adminhtml, ali on se, za razliku od adminhtml, odnosi 
+To je fajl slican adminhtml, ali on se, za razliku od adminhtml, odnosi
 iskljucivo na **System Configuration** deo u backend.
 
 
